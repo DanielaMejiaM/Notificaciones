@@ -1,0 +1,75 @@
+/**
+ * Sistema de Notificaciones Empresariales
+ * ----------------------------------------
+ * Ejemplo de diseño moderno en Java 21 utilizando:
+ *   - Sealed interfaces
+ *   - Records inmutables con constructores compactos
+ *   - Pattern Matching for switch (JEP 441)
+ *   - Arrays (sin colecciones)
+ *
+ * Compilar:  javac NotificationSystem.java
+ * Ejecutar:  java NotificationSystem
+ */
+public final class NotificationSystem {
+
+    public static void main(String[] args) {
+
+        // Array de notificaciones (instancias de cualquiera de los 3 tipos)
+        Notification[] notifications = new Notification[] {
+                new EmailNotification("ana.perez@empresa.com", "Bienvenida", "Gracias por registrarte."),
+                new EmailNotification("carlos@dominio.com", "Factura", "Tu factura está disponible."),
+                new SmsNotification("5512345678", "Tu código es 4521"),
+                new PushNotification("abc123xyz987", "Tienes un nuevo mensaje"),
+                new EmailNotification("luisa@empresa.com", "Recordatorio", "Tu cita es mañana."),
+                new SmsNotification("5598765432", "Pago recibido con éxito"),
+                new PushNotification("token-9f8e7d6c", "Oferta especial disponible"),
+                new PushNotification("device-55aa66bb", "Actualización disponible"),
+                new SmsNotification("5511223344", "Tu paquete fue enviado"),
+                new EmailNotification("jorge@empresa.com", "Soporte", "Tu ticket fue resuelto."),
+                new PushNotification("push-token-001", "Recordatorio de evento"),
+                new PushNotification("push-token-002", "Nuevo seguidor")
+        };
+        procesarNotificaciones(notifications);
+    }
+
+    /**
+     * Recorre el array de notificaciones, identifica el tipo real de cada una
+     * mediante pattern matching en un switch moderno (sin if-else ni instanceof
+     * tradicional), y acumula estadísticas por tipo.
+     */
+    private static void procesarNotificaciones(Notification[] notifications) {
+        int correos = 0;
+        int sms = 0;
+        int push = 0;
+
+        for (Notification notification : notifications) {
+            switch (notification) {
+                case EmailNotification email -> {
+                    correos++;
+                    System.out.printf("[EMAIL] Para: %s | Asunto: %s%n",
+                            email.email(), email.subject());
+                }
+                case SmsNotification smsNotif -> {
+                    sms++;
+                    System.out.printf("[SMS]   Para: %s | Mensaje: %s%n",
+                            smsNotif.phone(), smsNotif.message());
+                }
+                case PushNotification pushNotif -> {
+                    push++;
+                    System.out.printf("[PUSH]  Token: %s | Mensaje: %s%n",
+                            pushNotif.token(), pushNotif.message());
+                }
+            }
+        }
+
+        int total = correos + sms + push;
+
+        System.out.println();
+        System.out.println("========= RESUMEN =========");
+        System.out.println("Correos enviados: " + correos);
+        System.out.println("SMS enviados: " + sms);
+        System.out.println("Push enviados: " + push);
+        System.out.println("Total: " + total);
+    }
+}
+
