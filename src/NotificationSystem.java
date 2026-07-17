@@ -1,13 +1,6 @@
 import java.util.regex.Pattern;
 /**
  * Sistema de Notificaciones Empresariales
- * ----------------------------------------
- * Ejemplo de diseño moderno en Java 21 utilizando:
- *   - Sealed interfaces
- *   - Records inmutables con constructores compactos
- *   - Pattern Matching for switch (JEP 441)
- *   - Arrays (sin colecciones)
- *
  * Compilar:  javac NotificationSystem.java
  * Ejecutar:  java NotificationSystem
  */
@@ -15,7 +8,7 @@ public final class NotificationSystem {
 
     public static void main(String[] args) {
 
-        // Array de notificaciones (instancias de cualquiera de los 3 tipos)
+        // Array de notificaciones (instancias de cualquiera de los 3 tipos de notificaciones)
         Notification[] notifications = new Notification[] {
                 new EmailNotification("ana.perez@empresa.com", "Bienvenida", "Gracias por registrarte."),
                 new EmailNotification("carlos@dominio.com", "Factura", "Tu factura está disponible."),
@@ -35,8 +28,6 @@ public final class NotificationSystem {
 
     /**
      * Recorre el array de notificaciones, identifica el tipo real de cada una
-     * mediante pattern matching en un switch moderno (sin if-else ni instanceof
-     * tradicional), y acumula estadísticas por tipo.
      */
     private static void procesarNotificaciones(Notification[] notifications) {
         int correos = 0;
